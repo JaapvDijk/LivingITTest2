@@ -1,0 +1,20 @@
+{
+   "transactions":[
+      {
+         "reference":12345678,
+         "accountNumber":"AB12ABCD1234567891",
+         "startBalance":5.01,
+         "mutation":-2,
+         "description":"Nice text here",
+         "endBalance":3.01
+      },
+      {
+         "reference":12345679,
+         "accountNumber":"AB12ABCD1234567892",
+         "startBalance":-5,
+         "mutation":2,
+         "description":"\nSoRry 1 $h4v3 tr0u813 typing!",
+         "endBalance":100
+      }
+   ]
+}
