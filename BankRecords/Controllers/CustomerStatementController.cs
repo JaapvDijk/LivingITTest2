@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Net;
 
 namespace BankRecords.Controllers
 {
@@ -15,15 +13,7 @@ namespace BankRecords.Controllers
             this.transactions = transactions;
         }
 
-        [HttpGet("jaap")]
-        public ActionResult test()
-        {   
-            ReturnResult returnResult = new ReturnResult();
-            returnResult.Result = StatusMessage.SUCCESSFUL;
-            return Ok(returnResult);
-        }
-
-        [HttpPost("test")]
+        [HttpPost]
         public ActionResult<ReturnResult> CheckTransaction([FromBody] Transaction transaction)
         {
             ReturnResult returnResult = new ReturnResult();
@@ -47,7 +37,7 @@ namespace BankRecords.Controllers
                                                          isUniqueRefence);
 
                 IErrorRecord errorRecord = transaction;
-                if (statusCode > 200)
+                if (statusCode >= 300)
                     returnResult.ErrorRecords.Add(errorRecord);
 
                 returnResult.Result = statusMessage;

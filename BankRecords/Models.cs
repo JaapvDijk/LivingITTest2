@@ -7,12 +7,12 @@ namespace BankRecords
 {
     public static class StatusMessage
     {
-        public static string SUCCESSFUL { get { return "SUCCESSFUL"; } }
-        public static string DUPLICATE_REFERENCE { get { return "DUPLICATE_REFERENCE"; } }
-        public static string INTERNAL_SERVER_ERROR { get { return "INTERNAL_SERVER_ERROR"; } }
-        public static string BAD_REQUEST { get { return "BAD_REQUEST"; } }
-        public static string INCORRECT_END_BALANCE { get { return "INCORRECT_END_BALANCE"; } }
-        public static string DUPLICATE_REFERENCE_INCORRECT_END_BALANCE { get { return "DUPLICATE_REFERENCE_INCORRECT_END_BALANCE"; } }
+        public static readonly string SUCCESSFUL = "SUCCESSFUL";
+        public static readonly string DUPLICATE_REFERENCE = "DUPLICATE_REFERENCE";
+        public static readonly string INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
+        public static readonly string BAD_REQUEST = "BAD_REQUEST"; 
+        public static readonly string INCORRECT_END_BALANCE = "INCORRECT_END_BALANCE";
+        public static readonly string DUPLICATE_REFERENCE_INCORRECT_END_BALANCE = "DUPLICATE_REFERENCE_INCORRECT_END_BALANCE";
     }
 
     public class ReturnResult
@@ -20,6 +20,7 @@ namespace BankRecords
         public string Result { get; set; }
         public List<IErrorRecord> ErrorRecords { get; set; } = new List<IErrorRecord>();
 
+        //Service..
         public (int, string) GetStatusCodeAndMessage(bool CorrectBalance, bool uniqueRefence)
         {
             switch ((CorrectBalance, uniqueRefence))
@@ -27,11 +28,11 @@ namespace BankRecords
                 case (true, true):
                     return (200, StatusMessage.SUCCESSFUL);
 
-                case (false, true):
-                    return (400, StatusMessage.INCORRECT_END_BALANCE);
-
                 case (true, false):
                     return (409, StatusMessage.DUPLICATE_REFERENCE);
+
+                case (false, true):
+                    return (400, StatusMessage.INCORRECT_END_BALANCE);
 
                 case (false, false):
                     return (400, StatusMessage.DUPLICATE_REFERENCE_INCORRECT_END_BALANCE);
