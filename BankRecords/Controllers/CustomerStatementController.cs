@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Net;
 
 namespace BankRecords.Controllers
 {
@@ -27,18 +29,14 @@ namespace BankRecords.Controllers
                 }
 
                 bool isCorrectBalance = transaction.IsCorrectEndBalance();
-                bool isUniqueRefence = transactions.ReferenceIsUnique(transaction.Reference);
-
-                if (isUniqueRefence)
-                    transactions.Transactions.Add(transaction);
+                bool isUniqueRefence = transactions.AddIfRefenceUnique(transaction);
 
                 (int statusCode, string statusMessage) = 
                     returnResult.GetStatusCodeAndMessage(isCorrectBalance,
                                                          isUniqueRefence);
 
-                IErrorRecord errorRecord = transaction;
-                if (statusCode >= 300)
-                    returnResult.ErrorRecords.Add(errorRecord);
+                if (statusCode > 200)
+                    returnResult.ErrorRecords.Add(transaction);
 
                 returnResult.Result = statusMessage;
                 

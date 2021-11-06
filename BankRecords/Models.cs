@@ -56,9 +56,13 @@ namespace BankRecords
     {
         public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
-        public bool ReferenceIsUnique(int reference)
-        {
-            return !Transactions.Any(p => p.Reference == reference);
+        public bool AddIfRefenceUnique(Transaction transaction)
+        {   
+            bool isUnique = !Transactions.Any(p => p.Reference == transaction.Reference);
+
+            if (isUnique) Transactions.Add(transaction);
+
+            return isUnique;
         }
     }
 
