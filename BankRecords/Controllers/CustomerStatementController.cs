@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Net;
+using BankRecords.Models;
+using BankRecords.Services;
+using System;
 
 namespace BankRecords.Controllers
 {
@@ -8,11 +9,11 @@ namespace BankRecords.Controllers
     [Route("api/[controller]")]
     public class CustomerStatementController : ControllerBase
     {
-        private TransactionList transactions;
+        private TransactionService _transactionsService;
 
-        public CustomerStatementController(TransactionList transactions) 
+        public CustomerStatementController(TransactionService transactionsService) 
         {
-            this.transactions = transactions;
+            _transactionsService = transactionsService;
         }
 
         [HttpPost]
@@ -29,7 +30,7 @@ namespace BankRecords.Controllers
                 }
 
                 bool isCorrectBalance = transaction.IsCorrectEndBalance();
-                bool isUniqueRefence = transactions.AddIfRefenceUnique(transaction);
+                bool isUniqueRefence = _transactionsService.AddIfRefenceUnique(transaction);
 
                 (int statusCode, string statusMessage) = 
                     returnResult.GetStatusCodeAndMessage(isCorrectBalance,
@@ -42,7 +43,7 @@ namespace BankRecords.Controllers
                 
                 return StatusCode(statusCode, returnResult);
             }
-            catch
+            catch(Exception e)
             {
                 returnResult.Result = StatusMessage.INTERNAL_SERVER_ERROR;
                 return StatusCode(500, returnResult);
