@@ -1,18 +1,19 @@
 using Xunit;
 using BankRecords.Controllers;
+using BankRecords.Services;
 
 namespace BankRecords.Tests
 {
     [Collection("TransactionCollection")]
     public class CustomerStatementTests
     {   
-        private readonly TransactionList _transactions;
+        private readonly TransactionService _transactions;
         private readonly CustomerStatementController _controller;
 
         public CustomerStatementTests(TransactionFixture transactionFixture)
         {
             _transactions = transactionFixture.Transactions;
-            _controller = new CustomerStatementController(new TransactionList());
+            _controller = new CustomerStatementController(new TransactionService());
         }
 
         [Fact]

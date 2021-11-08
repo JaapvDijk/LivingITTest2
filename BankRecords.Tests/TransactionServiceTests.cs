@@ -1,13 +1,15 @@
 using Xunit;
+using BankRecords.Models;
+using BankRecords.Services;
 
 namespace BankRecords.Tests
 {
     [Collection("TransactionCollection")]
-    public class TransactionListTests
+    public class TransactionServiceTests
     {
-        private readonly TransactionList _transactions;
+        private readonly TransactionService _transactions;
 
-        public TransactionListTests(TransactionFixture transactionFixture)
+        public TransactionServiceTests(TransactionFixture transactionFixture)
         {
             _transactions = transactionFixture.Transactions;
         }
@@ -16,9 +18,9 @@ namespace BankRecords.Tests
         public void ReferenceIsUnique_ShouldReturnTrue()
         {
             Transaction transaction = _transactions.Transactions[0];
-            int reference = transaction.Reference + 123;
+            int reference = (transaction.Reference) + 1232;
 
-            Assert.True(_transactions.ReferenceIsUnique(reference));
+            Assert.True(_transactions.AddIfRefenceUnique(transaction));
         }
 
         [Fact]
@@ -26,7 +28,7 @@ namespace BankRecords.Tests
         {
             Transaction transaction = _transactions.Transactions[0];
 
-            Assert.False(_transactions.ReferenceIsUnique(transaction.Reference));
+            Assert.False(_transactions.AddIfRefenceUnique(transaction));
         }
     }
 }

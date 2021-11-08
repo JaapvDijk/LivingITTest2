@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using BankRecords.Services;
 
 namespace BankRecords
 {
@@ -31,7 +32,7 @@ namespace BankRecords
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BankRecords", Version = "v1" });
             });
-            services.AddSingleton<TransactionList>();
+            services.AddSingleton<TransactionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

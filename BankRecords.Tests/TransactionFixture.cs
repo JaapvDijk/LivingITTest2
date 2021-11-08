@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Security.Cryptography;
-using BankRecords;
+using BankRecords.Services;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
@@ -12,13 +11,13 @@ namespace BankRecords.Tests
     
     public class TransactionFixture
     {
-        public readonly TransactionList Transactions;
+        public readonly TransactionService Transactions;
 
         public TransactionFixture()
         {
             var path = Path.Combine(Environment.CurrentDirectory, @"../../../files/transactions.json");
             var json = JObject.Parse(File.ReadAllText(path));
-            Transactions = json.ToObject<TransactionList>();
+            Transactions = json.ToObject<TransactionService>();
         }
 
     }

@@ -1,11 +1,13 @@
 using Xunit;
+using BankRecords.Models;
+using BankRecords.Services;
 
 namespace BankRecords.Tests
 {
     [Collection("TransactionCollection")]
     public class TransactionTests
     {
-        private readonly TransactionList _transactions;
+        private readonly TransactionService _transactions;
 
         public TransactionTests(TransactionFixture transactionFixture)
         {
