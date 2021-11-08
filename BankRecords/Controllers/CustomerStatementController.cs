@@ -33,14 +33,14 @@ namespace BankRecords.Controllers
                 bool isUniqueRefence = _transactionsService.AddIfRefenceUnique(transaction);
 
                 (int statusCode, string statusMessage) = 
-                    returnResult.GetStatusCodeAndMessage(isCorrectBalance,
+                    _transactionsService.GetStatusCodeAndMessage(isCorrectBalance,
                                                          isUniqueRefence);
 
                 if (statusCode > 200)
                     returnResult.ErrorRecords.Add(transaction);
 
                 returnResult.Result = statusMessage;
-                
+
                 return StatusCode(statusCode, returnResult);
             }
             catch(Exception e)

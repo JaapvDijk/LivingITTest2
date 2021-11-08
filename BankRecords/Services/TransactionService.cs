@@ -17,12 +17,30 @@ namespace BankRecords.Services
         }
 
         public bool AddIfRefenceUnique(Transaction transaction)
-        {   
+        {
             bool isUnique = !Transactions.Any(p => p.Reference == transaction.Reference);
 
             if (isUnique) _customerStatementRepo.AddTransaction(transaction);
 
             return isUnique;
+        }
+
+        public (int, string) GetStatusCodeAndMessage(bool CorrectBalance, bool uniqueRefence)
+        {
+            switch ((CorrectBalance, uniqueRefence))
+            {
+                case (true, true):
+                    return (200, StatusMessage.SUCCESSFUL);
+
+                case (true, false):
+                    return (409, StatusMessage.DUPLICATE_REFERENCE);
+
+                case (false, true):
+                    return (400, StatusMessage.INCORRECT_END_BALANCE);
+
+                case (false, false):
+                    return (400, StatusMessage.DUPLICATE_REFERENCE_INCORRECT_END_BALANCE);
+            }
         }
     }
 }
